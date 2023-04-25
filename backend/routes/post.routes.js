@@ -1,29 +1,26 @@
 const express = require("express");
-const { route } = require("express/lib/application");
+const {
+  createPost,
+  getPosts,
+  editPost,
+  deletePost,
+  likePost,
+  dislikePost,
+} = require("../controllers/post.controller");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.json({ message: "Voici les données !" });
-});
+// Route pour la lecture des posts
+router.get("/", getPosts);
+// Route pour la création d'un nouveau post
+router.post("/", createPost);
+// Route pour la modification d'un post
+router.put("/:id", editPost);
+// Route pour la suppression d'un post
+router.delete("/:id", deletePost);
 
-router.post("/", (req, res) => {
-  res.json({ message: req.body.message });
-});
-
-router.put("/:id", (req, res) => {
-  res.json({ messageId: req.params.id });
-});
-
-router.delete("/:id", (req, res) => {
-  res.json({ message: "Post supprimé, id : " + req.params.id });
-});
-
-router.patch("/like-post/:id", (req, res) => {
-  res.json({ message: "Post liké, id " + req.params.id });
-});
-
-router.patch("/dislike-post/:id", (req, res) => {
-  res.json({ message: "Post disliké, id " + req.params.id });
-});
+// Route pour l'ajout d'un like sur un post
+router.patch("/like-post/:id", likePost);
+// Router pour la suppression d'un like sur un post 
+router.patch("/dislike-post/:id", dislikePost);
 
 module.exports = router;
