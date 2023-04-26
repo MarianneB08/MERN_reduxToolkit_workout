@@ -2,7 +2,7 @@ const express = require("express");
 const connectDB = require("./config/db");
 const dotenv = require('dotenv').config();
 const cors = require('cors');
-const port = 3000;
+const port = 5500;
 
 // Connexion à la DB
 connectDB();
@@ -10,11 +10,7 @@ connectDB();
 const app = express();
 
 // Autorisation CORS
-app.use(cors({
-    origin: "http://localhost:3001",
-    credentials: true,
-    optionsSuccessStatus: 200,
-}))
+app.use(cors());
 
 // Middleware qui permet de traiter les données de la requête
 app.use(express.json());

@@ -42,7 +42,6 @@ module.exports.deletePost = async (req, res) => {
 
 // Like d'un post
 module.exports.likePost = async (req, res) => {
-  console.log("je suis dans le controller likePost");
   try {
     await PostModel.findByIdAndUpdate(
       req.params.id,
