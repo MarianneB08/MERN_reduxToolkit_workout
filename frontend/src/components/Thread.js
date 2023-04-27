@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
 
-const Thread = ({ userId }) => {
+const Thread = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const Thread = ({ userId }) => {
       {posts
         .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
         .map((post) => (
-          <Post key={post._id} post={post} userId={userId} />
+          <Post key={post._id} post={post} />
         ))}
     </div>
   );

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
-const NewPost = ({ userId }) => {
+const NewPost = () => {
   const [message, setMessage] = useState("");
+  // On récupère le userId depuis le store avec le hook useSelector
+  const userId = useSelector((state) => state.user.userId)
 
   // Fonction exécutée au clic sur le bouton "Envoyer" du formulaire
   const handleForm = (e) => {

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import LikePost from "./LikePost";
 import DeletePost from "./DeletePost";
 
-const Post = ({ post, userId }) => {
+const Post = ({ post}) => {
   const [isAuthor, setIsAuthor] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [newMessage, setNewMessage] = useState("");
+  // On récupère le userId depuis le store avec le hook useSelector
+  const userId = useSelector((state) => state.user.userId)
 
   useEffect(() => {
     if (post.author === userId) {
@@ -14,7 +17,7 @@ const Post = ({ post, userId }) => {
     } else {
       setIsAuthor(false);
     }
-  }, [userId]);
+  }, [userId, post.author]);
 
   // Fonction pour gérer la modification d'un post
   const handleEdit = () => {
