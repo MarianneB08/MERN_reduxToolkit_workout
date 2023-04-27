@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { like, dislike } from "../feature/post.slice";
 
 const LikePost = ({ post }) => {
   const [userLiked, setUserLiked] = useState(false);
   // On récupère le userId depuis le store avec le hook useSelector
-  const userId = useSelector((state) => state.user.userId)
+  const userId = useSelector((state) => state.user.userId);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (post.likers) {
@@ -14,12 +16,12 @@ const LikePost = ({ post }) => {
       } else {
         setUserLiked(false);
       }
-      console.log(userLiked);
     }
-  }, [userId, post.likers, userLiked]);
+  }, [userId]);
 
   const likePost = () => {
     axios.patch(`http://localhost:5500/post/like-post/${post._id}`, { userId });
+    dispatch(like([userId, post._id]));
     setUserLiked(true);
   };
 
@@ -27,6 +29,7 @@ const LikePost = ({ post }) => {
     axios.patch(`http://localhost:5500/post/dislike-post/${post._id}`, {
       userId,
     });
+    dispatch(dislike([userId, post._id]));
     setUserLiked(false);
   };
 

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import LikePost from "./LikePost";
 import DeletePost from "./DeletePost";
+import { editPost } from "../feature/post.slice";
 
 const Post = ({ post}) => {
   const [isAuthor, setIsAuthor] = useState(false);
@@ -10,6 +11,7 @@ const Post = ({ post}) => {
   const [newMessage, setNewMessage] = useState("");
   // On récupère le userId depuis le store avec le hook useSelector
   const userId = useSelector((state) => state.user.userId)
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (post.author === userId) {
@@ -17,14 +19,15 @@ const Post = ({ post}) => {
     } else {
       setIsAuthor(false);
     }
-  }, [userId, post.author]);
+  }, [userId]);
 
   // Fonction pour gérer la modification d'un post
   const handleEdit = () => {
     if (newMessage) {
       axios.put("http://localhost:5500/post/" + post._id, {
         message: newMessage,
-      });
+      })
+      dispatch(editPost([newMessage, post._id]));
     }
   };
 
